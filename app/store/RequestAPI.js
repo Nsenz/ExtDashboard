@@ -4,6 +4,7 @@ var store = Ext.define('Ext.store.RequestAPI', {
     model: 'IBS.model.Request',
     autoLoad: true,
     autoSync: true,
+    pageSize: 4,
     proxy: {
         type: 'rest',
         api:{

@@ -86,12 +86,14 @@ Ext.define('IBS.view.main.List', {
                             xtype: 'container',
                             layout: 'hbox',
                             items:[{
-                                xtype: 'textfield',
+                                xtype: 'numberfield',
                                 fieldLabel: '№',
                                 margin: '5 5 5 5',
                                 labelWidth: 'auto',
                                 name: 'number',
-                                value: `${data.number}`
+                                minValue: 1,
+                                value: `${data.number}`,
+                                editable: false
                             },{
                                 xtype: 'textfield',
                                 fieldLabel: 'Заголовок',
@@ -109,14 +111,16 @@ Ext.define('IBS.view.main.List', {
                                 margin: '5 5 5 5',
                                 labelWidth: 'auto',
                                 name: 'dateStart',
-                                value: new Date(`${data.dateStart}`)
+                                value: new Date(`${data.dateStart}`),
+                                editable: false
                             },{
                                 xtype: 'datefield',
                                 fieldLabel: 'Завершение',
                                 margin: '5 5 5 5',
                                 labelWidth: 'auto',
                                 name: 'dateEnd',
-                                value: new Date(`${data.dateEnd}`)
+                                value: new Date(`${data.dateEnd}`),
+                                editable: false
                             },{
                                 xtype: 'datefield',
                                 fieldLabel: 'План',
@@ -124,6 +128,7 @@ Ext.define('IBS.view.main.List', {
                                 margin: '5 5 5 5',
                                 labelWidth: 'auto',
                                 value: new Date(`${data.toDate}`),
+                                editable: false,
                                 disabled: true
                             }]
                         },{
@@ -133,7 +138,8 @@ Ext.define('IBS.view.main.List', {
                             labelWidth: 'auto',
                             name: 'type',
                             store: ['Инцидент','Консультация'],
-                            value: `${data.type}`
+                            value: `${data.type}`,
+                            editable: false
                         },{
                             xtype: 'textarea',
                             grow: true,
@@ -171,29 +177,11 @@ Ext.define('IBS.view.main.List', {
                                     Ext.getCmp('mainGrid').getView().getStore().add(item);
                                 }
                                 xhr.send(item);
-                            }
-                            catch(e){
-                                console.error(e);
-                            }
-                            
-                            //try{
-                                //Ext.getCmp('mainGrid').getView().getStore().removeAt(rowIndex).add(item);
-                                
-/*                                 xhr.send(null);
-                                xhr.open("POST", `http://localhost:3000/post/article`, true);
-                                xhr.onload = function () {
-                                    models[rowIndex].set('number',item.number);
-                                }
-                                //alert(data._id);
-                                xhr.send(models[rowIndex].data); */
-/*                                 alert(JSON.stringify(models[rowIndex].data));
-                            }
-                            catch(e){
-                                console.error(e);
-                            }
-                            finally{
                                 popup.destroy();
-                            } */
+                            }
+                            catch(e){
+                                console.error(e);
+                            } 
                         }
                     },{
                         text: 'Cancel',
@@ -234,6 +222,9 @@ Ext.define('IBS.view.main.List', {
         afterPageText: 'из {0}',
         displayMsg: 'Записей {0} - {1} из {2}',
         emptyMsg: 'Нет доступных данных',
+        store: {
+            type: 'requestapi'
+        },
         buttons: [{
             iconCls: 'x-fa fa-plus actionColor green',
             tooltip: 'Add',
@@ -254,11 +245,14 @@ Ext.define('IBS.view.main.List', {
                         xtype: 'container',
                         layout: 'hbox',
                         items:[{
-                            xtype: 'textfield',
+                            xtype: 'numberfield',
                             fieldLabel: '№',
                             name: 'number',
                             margin: '5 5 5 5',
-                            labelWidth: 'auto'
+                            labelWidth: 'auto',
+                            value: 1,
+                            minValue: 1,
+                            editable: false
                         },{
                             xtype: 'textfield',
                             fieldLabel: 'Заголовок',
@@ -275,21 +269,25 @@ Ext.define('IBS.view.main.List', {
                             name: 'dateStart',
                             margin: '5 5 5 5',
                             labelWidth: 'auto',
-                            format: 'Y-m-d'
+                            format: 'Y-m-d',
+                            editable: false
                         },{
                             xtype: 'datefield',
                             fieldLabel: 'Завершение',
                             name: 'dateEnd',
                             margin: '5 5 5 5',
                             labelWidth: 'auto',
-                            format: 'Y-m-d'
+                            format: 'Y-m-d',
+                            editable: false
                         },{
                             xtype: 'datefield',
                             fieldLabel: 'План',
                             name: 'toDate',
                             margin: '5 5 5 5',
                             labelWidth: 'auto',
-                            format: 'Y-m-d'
+                            format: 'Y-m-d',
+                            editable: false,
+                            value: new Date()
                         }]
                     },{
                         xtype: 'combobox',
@@ -297,7 +295,9 @@ Ext.define('IBS.view.main.List', {
                         name: 'type',
                         margin: '5 5 5 5',
                         labelWidth: 'auto',
-                        store: ['Инцидент','Консультация']
+                        store: ['Инцидент','Консультация'],
+                        editable: false,
+                        value: 'Инцидент'
                     },{
                         xtype: 'textarea',
                         grow: true,
@@ -330,7 +330,10 @@ Ext.define('IBS.view.main.List', {
                     }
                     //formBind: true //?
                 },{
-                    text: 'Cancel'
+                    text: 'Cancel',
+                    handler: function(){
+                        popup.destroy();
+                    }
                 }]
                 });
                 popup.show();
