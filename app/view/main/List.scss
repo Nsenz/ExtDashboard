@@ -1,0 +1,27 @@
+@include extjs-panel-ui(
+    $ui: 'DataTable',
+    $ui-header-color: ivory,
+    $ui-header-border-color: rgb(0, 183, 255),
+    $ui-header-background-color: rgb(0, 183, 255)
+);
+
+.customGrid .x-grid-cell{
+    background-color: rgb(203, 238, 252);
+    color: black;
+    border: 1px solid gray;
+}
+
+.fulfilled .x-grid-cell{
+    background-color: rgb(149, 209, 149);
+}
+.notFulfilled .x-grid-cell{
+    background-color: rgb(255, 150, 136);
+}
+
+.customGrid .x-grid-cell>div{
+    text-align: center; //????????
+}
+
+.x-grid-cell .fa-trash-alt{
+    color: red;
+}
