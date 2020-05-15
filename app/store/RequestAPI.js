@@ -7,6 +7,7 @@ var store = Ext.define('Ext.store.RequestAPI', {
     pageSize: 4,
     proxy: {
         type: 'rest',
+        enablePaging: true,
         api:{
             read: 'http://localhost:3000/articles',
             create: 'http://localhost:3000/post/article',
