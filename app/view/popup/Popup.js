@@ -24,8 +24,7 @@ Ext.define('IBS.view.popup.Popup',{
                 labelWidth: 'auto',
                 name: 'number',
                 minValue: 1,
-                editable: false,
-                allowBlank: false
+                editable: false
             },{
                 xtype: 'textfield',
                 fieldLabel: 'Заголовок',
